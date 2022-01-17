@@ -89,7 +89,11 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
             h1.style.color = '#00FF00';
             fuelStatus.innerHTML = 'Fuel level is enough for launch.'
         }
-   }
+    } else {
+        list.style.visibility = "hidden";
+        h1.innerHTML = 'Awaiting Information Before Launch.'
+        h1.style.color = "#000000";
+    }
 
      
 }
