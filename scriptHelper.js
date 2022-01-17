@@ -25,14 +25,14 @@ function validateInput(testInput) {
     console.log('test input', testInput);
     if(!testInput.value) {
 
-        alert(`${testInput.name} is required.`)
+        window.alert(`${testInput.name} is required.`)
         return false;
 
     } else {
         if(testInput.name === 'fuelLevel' || 
             testInput.name === 'cargoMass') {
                 if(isNaN(parseInt(testInput.value))) {
-                    alert(`${testInput.name} needs to be a number.`)
+                    window.alert(`${testInput.name} needs to be a number.`)
                     return false;
                 }
 
@@ -57,7 +57,7 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
                     !cargoLevel.value;
 
     if(allFields) {
-        alert('All fields are required.');
+        window.alert('All fields are required.');
     } else {
         validateInput(pilot);
         validateInput(copilot);
