@@ -22,18 +22,14 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
 }
 
 function validateInput(testInput) {
-    console.log('test input', testInput);
     if(!testInput.value) {
-
-        window.alert(`${testInput.name} is required.`)
-        return false;
+        return  'value is required';
 
     } else {
         if(testInput.name === 'fuelLevel' || 
             testInput.name === 'cargoMass') {
                 if(isNaN(parseInt(testInput.value))) {
-                    window.alert(`${testInput.name} needs to be a number.`)
-                    return false;
+                    return 'Needs to be a number';
                 }
 
                 if(testInput.name === 'fuelLevel') {
@@ -50,6 +46,13 @@ function validateInput(testInput) {
 }
 
 function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {  
+    const h1 = document.getElementById("launchStatus");
+    const pilotDetails = document.getElementById("pilotStatus");
+    const copilotDetails = document.getElementById("copilotStatus");
+    const fuelStatus = document.getElementById("fuelStatus");
+    const cargoStatus = document.getElementById("cargoStatus");
+
+
     let isNotEnough;  
     const allFields = !pilot.value && 
                     !copilot.value && 
@@ -57,23 +60,27 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
                     !cargoLevel.value;
 
     if(allFields) {
-        window.alert('All fields are required.');
-    } else {
-        validateInput(pilot);
-        validateInput(copilot);
-        validateInput(cargoLevel);
-        isNotEnough = validateInput(fuelLevel);
+        alert('All fields are required!');
+        return;
+    } 
+
+    if(validateInput(pilot) === 'value is required' || 
+        validateInput(copilot) == 'value is required' || 
+        validateInput(fuelLevel) === 'Needs to be a number' ||
+        validateInput(cargoLevel) === 'Needs to be a number') {
+            h1.innerHTML = 'Awaiting Information Before Launch.'
+            h1.style.color = "#000000";
+            alert('Make sure to enter valid information for each field!');
+            return;
     }
+    isNotEnough = validateInput(fuelLevel);
+    
     
    
-    const h1 = document.getElementById("launchStatus")   
 
    if(!isNaN(parseInt(fuelLevel.value))) {    
         
-        const pilotDetails = document.getElementById("pilotStatus")
-        const copilotDetails = document.getElementById("copilotStatus")
-        const fuelStatus = document.getElementById("fuelStatus")
-        const cargoStatus = document.getElementById("cargoStatus")
+      
 
         pilotDetails.innerHTML = `${pilot.value} is ready for launch.`;
         copilotDetails.innerHTML = `${copilot.value} is ready for launch`;
@@ -89,10 +96,6 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
             h1.style.color = '#00FF00';
             fuelStatus.innerHTML = 'Fuel level is enough for launch.'
         }
-    } else {
-        list.style.visibility = "hidden";
-        h1.innerHTML = 'Awaiting Information Before Launch.'
-        h1.style.color = "#000000";
     }
 
      
